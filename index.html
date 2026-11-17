@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>초등학교 4학년 2학기 수학 - 꺾은선그래프 단원 마무리</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Jua & Noto Sans KR for friendly elementary school vibe -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f0f7ff;
+      background-image: radial-gradient(#cbe3ff 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .font-jua {
+      font-family: 'Jua', sans-serif;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #e0f2fe;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #7dd3fc;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+    .option-btn {
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-pop {
+      animation: popIn 0.25s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+  <!-- 상단 헤더 -->
+  <header class="bg-white/90 backdrop-blur-md border-b-2 border-sky-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 text-white flex items-center justify-center shadow-md font-jua text-xl">
+          📈
+        </div>
+        <div>
+          <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full">초등 4학년 2학기 수학</span>
+          <h1 class="font-jua text-xl sm:text-2xl text-slate-800 tracking-wide">꺾은선그래프 단원 마무리</h1>
+        </div>
+      </div>
+
+      <!-- 학생 정보 표시 배지 (로그인 후 활성화) -->
+      <div id="header-student-info" class="hidden items-center gap-3">
+        <div class="bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl flex items-center gap-2 text-sm font-bold text-amber-900 shadow-sm">
+          <span>🎒</span>
+          <span id="display-student-label">4학년 1반 1번 홍길동</span>
+        </div>
+        <div id="header-progress-badge" class="bg-sky-50 border border-sky-200 px-3 py-1.5 rounded-xl text-sm font-bold text-sky-700">
+          진행률: <span id="solved-count">0</span> / 20
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 알림 메시지 토스트/모달 영역 (alert() 대체) -->
+  <div id="toast-container" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center gap-2 w-full max-w-md px-4"></div>
+
+  <!-- 메인 컨테이너 -->
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6 sm:py-8">
+
+    <!-- ========================================== -->
+    <!-- 1. 시작 화면 (학생 정보 입력)               -->
+    <!-- ========================================== -->
+    <section id="screen-start" class="max-w-xl mx-auto bg-white rounded-3xl shadow-xl border-2 border-sky-100 p-6 sm:p-10 animate-pop">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-sky-100 text-4xl mb-4 shadow-inner">
+          📊
+        </div>
+        <h2 class="font-jua text-3xl text-slate-800 mb-2">단원 마무리 평가를 시작해요!</h2>
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+          4학년 2학기 <strong>5단원. 꺾은선그래프</strong>에서 배운 내용을 확인해 봅시다.<br/>
+          총 <strong>20문제</strong>(선다형 15문제, 단답형 5문제)가 준비되어 있어요.
+        </p>
+      </div>
+
+      <!-- 난이도 및 규칙 안내 카드 -->
+      <div class="bg-sky-50/80 border border-sky-200 rounded-2xl p-4 mb-6 text-sm text-slate-700 space-y-2">
+        <div class="flex items-center gap-2 font-bold text-sky-800">
+          <span>💡</span> <span>풀이 안내</span>
+        </div>
+        <ul class="list-disc list-inside space-y-1 text-slate-600 ml-1">
+          <li>난이도 구성: <span class="font-bold text-emerald-600">하 7문제</span> · <span class="font-bold text-amber-600">중 7문제</span> · <span class="font-bold text-rose-600">상 6문제</span></li>
+          <li>단답형 문제는 <strong>숫자만</strong> 정확하게 입력해 주세요.</li>
+          <li>채점 후 틀린 문제는 <strong>다시 풀기 기회(1회)</strong>가 주어집니다!</li>
+        </ul>
+      </div>
+
+      <!-- 학생 정보 입력 폼 -->
+      <form id="start-form" class="space-y-4" novalidate>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="input-class" class="block text-sm font-bold text-slate-700 mb-1.5">반 <span class="text-rose-500">*</span></label>
+            <div class="relative">
+              <input type="number" id="input-class" min="1" max="30" placeholder="예: 3"
+                class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 outline-none font-bold text-lg text-center transition" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">반</span>
+            </div>
+          </div>
+          <div>
+            <label for="input-number" class="block text-sm font-bold text-slate-700 mb-1.5">번호 <span class="text-rose-500">*</span></label>
+            <div class="relative">
+              <input type="number" id="input-number" min="1" max="50" placeholder="예: 12"
+                class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 outline-none font-bold text-lg text-center transition" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">번</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="input-name" class="block text-sm font-bold text-slate-700 mb-1.5">이름 <span class="text-rose-500">*</span></label>
+          <input type="text" id="input-name" maxlength="15" placeholder="이름을 입력하세요 (예: 김하늘)"
+            class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 outline-none font-bold text-lg text-center transition" />
+        </div>
+
+        <!-- 입력 오류 안내 영역 -->
+        <div id="start-error-msg" class="hidden bg-rose-50 border border-rose-200 text-rose-600 text-sm font-bold px-4 py-3 rounded-xl text-center">
+        </div>
+
+        <button type="submit"
+          class="w-full mt-2 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-jua text-2xl py-4 rounded-2xl shadow-lg shadow-sky-200 hover:shadow-xl transition transform active:scale-[0.99] cursor-pointer">
+          학습 시작하기 🚀
+        </button>
+      </form>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. 문제 풀이 화면 (20문항)                  -->
+    <!-- ========================================== -->
+    <section id="screen-quiz" class="hidden space-y-6">
+      <!-- 상단 문항 빠른 이동 네비게이터 -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-sky-100">
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-sm font-bold text-slate-600">📌 문항 번호 바로가기 (파란색: 답안 작성 완료)</span>
+          <span class="text-xs text-slate-400">총 20문항 (문항당 5점)</span>
+        </div>
+        <div id="question-nav-grid" class="grid grid-cols-10 sm:grid-cols-20 gap-1.5">
+          <!-- JS로 1~20번 버튼 렌더링 -->
+        </div>
+      </div>
+
+      <!-- 문제 목록 컨테이너 -->
+      <div id="questions-container" class="space-y-8">
+        <!-- JS로 20개의 문제 카드 렌더링 -->
+      </div>
+
+      <!-- 하단 제출 영역 -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-lg border-2 border-sky-200 text-center space-y-4">
+        <p id="submit-status-text" class="text-slate-600 font-medium">
+          모든 문제를 꼼꼼히 확인한 후 아래 버튼을 눌러 채점해 보세요!
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button type="button" id="btn-submit-quiz"
+            class="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-jua text-2xl rounded-2xl shadow-lg shadow-emerald-200 transition transform active:scale-95 cursor-pointer">
+            제출하고 채점하기 ✅
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. 채점 결과 및 오답 재도전 화면             -->
+    <!-- ========================================== -->
+    <section id="screen-result" class="hidden space-y-8 animate-pop">
+      <!-- 성적표 요약 카드 -->
+      <div class="bg-white rounded-3xl shadow-xl border-2 border-sky-200 overflow-hidden">
+        <div class="bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-5 text-white flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span class="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-1">단원 마무리 채점 결과</span>
+            <h2 id="result-student-title" class="font-jua text-2xl sm:text-3xl">4학년 0반 0번 홍길동 학생의 결과</h2>
+          </div>
+          <div class="bg-white text-slate-800 px-6 py-3 rounded-2xl shadow-md text-center">
+            <div class="text-xs font-bold text-slate-500">1차 채점 점수</div>
+            <div class="font-jua text-4xl text-blue-600"><span id="result-score">0</span><span class="text-xl text-slate-600">점</span></div>
+          </div>
+        </div>
+
+        <div class="p-6 space-y-6">
+          <!-- 맞힌 개수 / 틀린 개수 요약 -->
+          <div class="grid grid-cols-3 gap-3 sm:gap-4 text-center">
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+              <div class="text-xs sm:text-sm font-bold text-slate-500 mb-1">전체 문항</div>
+              <div class="font-jua text-2xl sm:text-3xl text-slate-700">20문제</div>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+              <div class="text-xs sm:text-sm font-bold text-emerald-700 mb-1">맞힌 문제 (O)</div>
+              <div class="font-jua text-2xl sm:text-3xl text-emerald-600"><span id="result-correct-count">0</span>문제</div>
+            </div>
+            <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4">
+              <div class="text-xs sm:text-sm font-bold text-rose-700 mb-1">틀린 문제 (X)</div>
+              <div class="font-jua text-2xl sm:text-3xl text-rose-600"><span id="result-wrong-count">0</span>문제</div>
+            </div>
+          </div>
+
+          <!-- 20문항 정오표 그리드 -->
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <h3 class="font-bold text-slate-700 text-base">📋 문항별 정오표 (클릭하면 해당 문제로 이동해요)</h3>
+              <div class="flex items-center gap-3 text-xs font-bold">
+                <span class="flex items-center gap-1 text-emerald-600"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>1차 정답</span>
+                <span class="flex items-center gap-1 text-amber-600"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>2차 재도전 성공</span>
+                <span class="flex items-center gap-1 text-rose-600"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>오답(확인 필요)</span>
+              </div>
+            </div>
+            <div id="scorecard-grid" class="grid grid-cols-5 sm:grid-cols-10 gap-2">
+              <!-- JS로 1~20번 정오표 렌더링 -->
+            </div>
+          </div>
+
+          <!-- 오답 재도전 안내 배너 -->
+          <div id="retry-guide-banner" class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 flex items-start gap-3">
+            <span class="text-2xl">✏️</span>
+            <div>
+              <h4 class="font-bold text-amber-900 text-base mb-1">틀린 문제를 다시 한 번 풀어 보세요!</h4>
+              <p class="text-sm text-amber-800 leading-relaxed">
+                아래에서 <span class="font-bold text-rose-600">틀린 문제(X)</span>를 찾아 새로운 답을 고르거나 입력한 뒤 <strong>[다시 확인하기]</strong> 버튼을 눌러 주세요.<br/>
+                2차 시도에서도 틀리면 정답과 자세한 풀이 해설이 나타납니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- 필터 및 전체 복습 컨트롤 -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+            <div class="flex items-center gap-2">
+              <button type="button" id="filter-all-btn" class="px-4 py-2 rounded-xl text-sm font-bold bg-sky-600 text-white shadow-sm cursor-pointer">
+                전체 문제 보기 (20)
+              </button>
+              <button type="button" id="filter-wrong-btn" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">
+                틀린 문제만 모아보기 (<span id="filter-wrong-num">0</span>)
+              </button>
+            </div>
+            <button type="button" id="btn-restart-all" class="px-4 py-2 rounded-xl text-sm font-bold bg-slate-700 hover:bg-slate-800 text-white transition cursor-pointer">
+              🔄 처음부터 다시 풀기
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 채점 후 문항별 리뷰 및 재도전 카드 리스트 -->
+      <div id="result-questions-container" class="space-y-8">
+        <!-- JS로 채점 결과 및 재도전 UI 렌더링 -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="text-center py-6 text-xs text-slate-400">
+    초등학교 4학년 2학기 수학 · 5. 꺾은선그래프 단원 마무리 학습 프로그램
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- JavaScript: 그래프 SVG 엔진 + 20문항 데이터 + 채점 및 재도전 상태 관리 -->
+  <!-- ===================================================================== -->
+  <script>
+    /**
+     * 1. 정밀 SVG 꺾은선그래프 및 비교 그래프 생성 유틸리티
+     * - 눈금선(주요 눈금, 보조 눈금), 물결선(zigzag), 가로축/세로축 라벨, 단위, 데이터 점과 선분을 선명하게 그립니다.
+     */
+    function createLineGraphSVG(config) {
+      const {
+        title = "",
+        yUnit = "",
+        xUnit = "",
+        yMin = 0,
+        yMax = 100,
+        yMajorStep = 20,   // 숫자가 적히는 큰 눈금 간격
+        yMinorStep = 5,    // 작은 눈금 한 칸의 크기
+        useWavyLine = false, // 물결선 사용 여부 (0과 yMin 사이 생략)
+        xLabels = [],
+        values = [],       // 숫자 배열 (null이면 점 생략 가능)
+        pointColor = "#0284c7",
+        lineColor = "#0ea5e9",
+        highlightIndex = -1,
+        showValuesOnPoints = false
+      } = config;
+
+      const width = 560;
+      const height = 340;
+      const padLeft = 72;
+      const padRight = 36;
+      const padTop = 52;
+      const padBottom = 64;
+
+      const plotW = width - padLeft - padRight;
+      const plotH = height - padTop - padBottom;
+
+      // 물결선 영역 높이 (물결선이 있으면 하단 28px을 물결 구역으로 할당)
+      const wavyHeight = useWavyLine ? 30 : 0;
+      const effectivePlotH = plotH - wavyHeight;
+      const plotBottomY = padTop + plotH;
+      const scaleZeroY = plotBottomY - wavyHeight;
+
+      const totalRange = yMax - yMin;
+
+      // Y값 -> SVG Y좌표 변환
+      function getY(val) {
+        const ratio = (val - yMin) / totalRange;
+        return scaleZeroY - ratio * effectivePlotH;
+      }
+
+      // X인덱스 -> SVG X좌표 변환
+      function getX(idx) {
+        if (xLabels.length <= 1) return padLeft + plotW / 2;
+        const stepX = plotW / (xLabels.length - 1);
+        return padLeft + idx * stepX;
+      }
+
+      let svg = `<svg viewBox="0 0 ${width} ${height}" class="w-full max-w-xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-sm select-none" role="img" aria-label="${title}">`;
+
+      // 배경 격자 및 제목
+      svg += `<text x="${width / 2}" y="26" text-anchor="middle" font-size="16" font-weight="800" fill="#1e293b">${title}</text>`;
+
+      // 세로축 단위 표시
+      if (yUnit) {
+        svg += `<text x="${padLeft - 10}" y="${padTop - 12}" text-anchor="end" font-size="12" font-weight="700" fill="#475569">(${yUnit})</text>`;
+      }
+
+      // 가로 눈금선 그리기 (보조 눈금 & 주요 눈금)
+      // 부동소수점 오차 방지를 위해 정수 스텝 수로 계산
+      const minorCount = Math.round((yMax - yMin) / yMinorStep);
+      for (let i = 0; i <= minorCount; i++) {
+        const val = Number((yMin + i * yMinorStep).toFixed(4));
+        const y = getY(val);
+        // 주요 눈금인지 판별
+        const diffFromMin = Number((val - yMin).toFixed(4));
+        const isMajor = Math.abs(diffFromMin % yMajorStep) < 0.0001 || Math.abs((diffFromMin % yMajorStep) - yMajorStep) < 0.0001;
+
+        svg += `<line x1="${padLeft}" y1="${y}" x2="${padLeft + plotW}" y2="${y}" 
+          stroke="${isMajor ? '#94a3b8' : '#e2e8f0'}" 
+          stroke-width="${isMajor ? '1.4' : '1'}" />`;
+
+        if (isMajor) {
+          svg += `<text x="${padLeft - 10}" y="${y + 4}" text-anchor="end" font-size="12" font-weight="700" fill="#334155">${val}</text>`;
+        }
+      }
+
+      // 물결선(Wavy line) 처리
+      if (useWavyLine) {
+        // 0 라벨 표시
+        svg += `<text x="${padLeft - 10}" y="${plotBottomY + 4}" text-anchor="end" font-size="12" font-weight="700" fill="#334155">0</text>`;
+        // 물결선 구역 배경
+        svg += `<rect x="${padLeft}" y="${scaleZeroY}" width="${plotW}" height="${wavyHeight}" fill="#f8fafc" />`;
+        // 물결 무늬 2줄 그리기
+        const waveMid1 = scaleZeroY + wavyHeight * 0.35;
+        const waveMid2 = scaleZeroY + wavyHeight * 0.68;
+        let path1 = `M ${padLeft - 6} ${waveMid1}`;
+        let path2 = `M ${padLeft - 6} ${waveMid2}`;
+        const segW = 14;
+        for (let wx = padLeft - 6; wx < padLeft + plotW + 6; wx += segW) {
+          path1 += ` Q ${wx + segW * 0.25} ${waveMid1 - 5}, ${wx + segW * 0.5} ${waveMid1} T ${wx + segW} ${waveMid1}`;
+          path2 += ` Q ${wx + segW * 0.25} ${waveMid2 - 5}, ${wx + segW * 0.5} ${waveMid2} T ${wx + segW} ${waveMid2}`;
+        }
+        svg += `<path d="${path1}" fill="none" stroke="#0284c7" stroke-width="1.8" />`;
+        svg += `<path d="${path2}" fill="none" stroke="#0284c7" stroke-width="1.8" />`;
+      }
+
+      // 세로축 보조선 (X축 각 지점) 및 X축 라벨
+      xLabels.forEach((label, idx) => {
+        const x = getX(idx);
+        svg += `<line x1="${x}" y1="${padTop}" x2="${x}" y2="${plotBottomY}" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3" />`;
+        svg += `<text x="${x}" y="${plotBottomY + 22}" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">${label}</text>`;
+      });
+
+      // 가로축 단위 표시
+      if (xUnit) {
+        svg += `<text x="${padLeft + plotW + 6}" y="${plotBottomY + 22}" text-anchor="start" font-size="12" font-weight="700" fill="#475569">(${xUnit})</text>`;
+      }
+
+      // 외곽 축 선 (왼쪽 Y축, 아래 X축)
+      svg += `<line x1="${padLeft}" y1="${padTop}" x2="${padLeft}" y2="${plotBottomY}" stroke="#475569" stroke-width="2" />`;
+      svg += `<line x1="${padLeft}" y1="${plotBottomY}" x2="${padLeft + plotW}" y2="${plotBottomY}" stroke="#475569" stroke-width="2" />`;
+
+      // 꺾은선 연결
+      let pointsStr = "";
+      const coords = [];
+      values.forEach((val, idx) => {
+        if (val !== null && val !== undefined) {
+          const cx = getX(idx);
+          const cy = getY(val);
+          coords.push({ cx, cy, val, idx });
+          pointsStr += `${cx},${cy} `;
+        }
+      });
+
+      if (coords.length > 1) {
+        svg += `<polyline points="${pointsStr.trim()}" fill="none" stroke="${lineColor}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />`;
+      }
+
+      // 데이터 점 찍기
+      coords.forEach(({ cx, cy, val, idx }) => {
+        const isHighlighted = idx === highlightIndex;
+        svg += `<circle cx="${cx}" cy="${cy}" r="${isHighlighted ? 7 : 5}" fill="${isHighlighted ? '#e11d48' : pointColor}" stroke="#ffffff" stroke-width="2" />`;
+        if (showValuesOnPoints) {
+          svg += `<text x="${cx}" y="${cy - 10}" text-anchor="middle" font-size="11" font-weight="800" fill="#0f172a">${val}</text>`;
+        }
+      });
+
+      svg += `</svg>`;
+      return svg;
+    }
+
+    /**
+     * 1-2. 막대그래프 vs 꺾은선그래프 비교 SVG (특정 문항용)
+     */
+    function createComparisonMiniChartsSVG() {
+      return `
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+        <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm text-center">
+          <div class="text-xs font-bold text-slate-500 mb-1">[가] 그래프</div>
+          <svg viewBox="0 0 260 170" class="w-full">
+            <text x="130" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">마을별 사과 생산량</text>
+            <line x1="40" y1="30" x2="40" y2="135" stroke="#64748b" stroke-width="1.5"/>
+            <line x1="40" y1="135" x2="240" y2="135" stroke="#64748b" stroke-width="1.5"/>
+            <rect x="55" y="65" width="24" height="70" fill="#60a5fa" rx="3"/>
+            <rect x="100" y="45" width="24" height="90" fill="#60a5fa" rx="3"/>
+            <rect x="145" y="85" width="24" height="50" fill="#60a5fa" rx="3"/>
+            <rect x="190" y="55" width="24" height="80" fill="#60a5fa" rx="3"/>
+            <text x="67" y="150" text-anchor="middle" font-size="10" fill="#334155">가마을</text>
+            <text x="112" y="150" text-anchor="middle" font-size="10" fill="#334155">나마을</text>
+            <text x="157" y="150" text-anchor="middle" font-size="10" fill="#334155">다마을</text>
+            <text x="202" y="150" text-anchor="middle" font-size="10" fill="#334155">라마을</text>
+          </svg>
+        </div>
+        <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm text-center">
+          <div class="text-xs font-bold text-slate-500 mb-1">[나] 그래프</div>
+          <svg viewBox="0 0 260 170" class="w-full">
+            <text x="130" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e293b">시간에 따른 강수량 변화</text>
+            <line x1="40" y1="30" x2="40" y2="135" stroke="#64748b" stroke-width="1.5"/>
+            <line x1="40" y1="135" x2="240" y2="135" stroke="#64748b" stroke-width="1.5"/>
+            <polyline points="65,115 110,90 155,50 200,70" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+            <circle cx="65" cy="115" r="4" fill="#d97706"/>
+            <circle cx="110" cy="90" r="4" fill="#d97706"/>
+            <circle cx="155" cy="50" r="4" fill="#d97706"/>
+            <circle cx="200" cy="70" r="4" fill="#d97706"/>
+            <text x="65" y="150" text-anchor="middle" font-size="10" fill="#334155">1시</text>
+            <text x="110" y="150" text-anchor="middle" font-size="10" fill="#334155">2시</text>
+            <text x="155" y="150" text-anchor="middle" font-size="10" fill="#334155">3시</text>
+            <text x="200" y="150" text-anchor="middle" font-size="10" fill="#334155">4시</text>
+          </svg>
+        </div>
+      </div>`;
+    }
+
+    /**
+     * 2. 총 20문항 데이터 (하 7문제, 중 7문제, 상 6문제 / 선다형 15문제, 단답형 5문제)
+     * - 교육과정 성취기준:
+     *   [4수05-03] 연속적인 변량에 대한 자료를 수집하여 꺾은선그래프로 나타낼 수 있다.
+     *   [4수05-04] 여러 가지 자료를 수집, 분류, 정리하여 꺾은선그래프로 나타내고, 그래프를 해석할 수 있다.
+     */
+    const QUIZ_DATA = [
+      // ==================== [난이도: 하] 1번 ~ 7번 ====================
+      {
+        id: 1,
+        difficulty: "하",
+        type: "choice",
+        question: "다음은 지호네 반 교실의 온도를 오전 9시부터 오후 1시까지 1시간 간격으로 재어 나타낸 꺾은선그래프입니다. 세로 눈금 한 칸은 몇 °C를 나타내나요?",
+        visualHTML: createLineGraphSVG({
+          title: "시간에 따른 교실의 온도",
+          yUnit: "°C",
+          xUnit: "시",
+          yMin: 0,
+          yMax: 30,
+          yMajorStep: 10,
+          yMinorStep: 2,
+          xLabels: ["9", "10", "11", "12", "13"],
+          values: [18, 20, 22, 26, 24]
+        }),
+        options: ["1 °C", "2 °C", "5 °C", "10 °C"],
+        answer: "2 °C",
+        explanation: "세로축에서 0부터 10까지 눈금이 모두 5칸으로 나누어져 있습니다. 따라서 10 ÷ 5 = 2이므로, 세로 눈금 한 칸은 2 °C를 나타냅니다."
+      },
+      {
+        id: 2,
+        difficulty: "하",
+        type: "choice",
+        question: "위의 1번 그래프(시간에 따른 교실의 온도)에서 교실의 온도가 가장 높았을 때는 몇 시인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "시간에 따른 교실의 온도",
+          yUnit: "°C",
+          xUnit: "시",
+          yMin: 0,
+          yMax: 30,
+          yMajorStep: 10,
+          yMinorStep: 2,
+          xLabels: ["9", "10", "11", "12", "13"],
+          values: [18, 20, 22, 26, 24]
+        }),
+        options: ["9시", "10시", "12시", "13시"],
+        answer: "12시",
+        explanation: "꺾은선그래프에서 점이 가장 높이 찍힌 때가 온도가 가장 높은 시각입니다. 12시의 온도가 26 °C로 가장 높습니다."
+      },
+      {
+        id: 3,
+        difficulty: "하",
+        type: "short",
+        unit: "cm",
+        question: "민서가 강낭콩을 심은 지 1주일마다 싹의 키를 재어 나타낸 꺾은선그래프입니다. 4주째 되는 날 강낭콩 싹의 키는 몇 cm인가요? (숫자만 쓰세요)",
+        visualHTML: createLineGraphSVG({
+          title: "강낭콩 싹의 키 변화",
+          yUnit: "cm",
+          xUnit: "주",
+          yMin: 0,
+          yMax: 20,
+          yMajorStep: 5,
+          yMinorStep: 1,
+          xLabels: ["1", "2", "3", "4", "5"],
+          values: [3, 6, 10, 14, 17],
+          pointColor: "#16a34a",
+          lineColor: "#22c55e"
+        }),
+        answer: "14",
+        explanation: "세로 눈금 5칸이 5 cm이므로 눈금 한 칸은 1 cm입니다. 가로축 '4'주에서 위로 올라가 점의 눈금을 읽으면 15 cm보다 한 칸 아래인 14 cm입니다."
+      },
+      {
+        id: 4,
+        difficulty: "하",
+        type: "choice",
+        question: "다음 중 꺾은선그래프로 나타내기에 가장 알맞은 자료는 어느 것인가요?",
+        visualHTML: "",
+        options: [
+          "우리 반 친구들이 좋아하는 과일별 학생 수",
+          "달마다 측정한 수빈이의 몸무게 변화",
+          "학교 도서관에 있는 책의 종류별 권수",
+          "우리나라 광역시별 인구수 비교"
+        ],
+        answer: "달마다 측정한 수빈이의 몸무게 변화",
+        explanation: "꺾은선그래프는 시간의 흐름에 따라 연속적으로 변하는 양(몸무게, 기온, 키의 변화 등)을 나타내는 데 가장 알맞습니다. 나머지 항목들은 항목별 크기를 비교하는 막대그래프가 알맞습니다."
+      },
+      {
+        id: 5,
+        difficulty: "하",
+        type: "choice",
+        question: "연수네 학교 도서관의 월별 대출 권수를 나타낸 꺾은선그래프입니다. 대출 권수가 가장 적었던 달은 몇 월인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "월별 도서관 책 대출 권수",
+          yUnit: "권",
+          xUnit: "월",
+          yMin: 0,
+          yMax: 500,
+          yMajorStep: 100,
+          yMinorStep: 20,
+          xLabels: ["3", "4", "5", "6", "7"],
+          values: [240, 320, 420, 380, 200],
+          pointColor: "#7c3aed",
+          lineColor: "#8b5cf6"
+        }),
+        options: ["3월", "4월", "6월", "7월"],
+        answer: "7월",
+        explanation: "점이 가장 아래쪽에 찍힌 달을 찾으면 7월(200권)입니다."
+      },
+      {
+        id: 6,
+        difficulty: "하",
+        type: "choice",
+        question: "다음 두 그래프 [가]와 [나]를 보고 바르게 설명한 친구는 누구인가요?",
+        visualHTML: createComparisonMiniChartsSVG(),
+        options: [
+          "지민: [가]는 시간이 지남에 따라 변하는 모습을 한눈에 알 수 있어.",
+          "현우: [나]는 마을별 사과 생산량을 비교할 때 쓰기 좋아.",
+          "서연: [나]는 시간에 따른 강수량의 변화 경향을 알기 쉬워.",
+          "태양: [가]와 [나] 모두 꺾은선그래프야."
+        ],
+        answer: "서연: [나]는 시간에 따른 강수량의 변화 경향을 알기 쉬워.",
+        explanation: "[가]는 막대그래프로 항목별 수량을 비교하기 좋고, [나]는 꺾은선그래프로 시간의 흐름에 따른 변화 모습을 한눈에 파악하기 좋습니다."
+      },
+      {
+        id: 7,
+        difficulty: "하",
+        type: "short",
+        unit: "명",
+        question: "어느 박물관의 요일별 관람객 수를 나타낸 꺾은선그래프입니다. 수요일의 관람객 수는 몇 명인가요? (숫자만 쓰세요)",
+        visualHTML: createLineGraphSVG({
+          title: "요일별 박물관 관람객 수",
+          yUnit: "명",
+          xUnit: "요일",
+          yMin: 0,
+          yMax: 300,
+          yMajorStep: 50,
+          yMinorStep: 10,
+          xLabels: ["월", "화", "수", "목", "금"],
+          values: [120, 150, 180, 160, 240],
+          pointColor: "#ea580c",
+          lineColor: "#f97316"
+        }),
+        answer: "180",
+        explanation: "세로 눈금 5칸이 50명이므로 눈금 한 칸은 10명입니다. 수요일의 점은 150에서 위로 3칸 올라간 위치이므로 180명입니다."
+      },
+
+      // ==================== [난이도: 중] 8번 ~ 14번 ====================
+      {
+        id: 8,
+        difficulty: "중",
+        type: "choice",
+        question: "다음 그래프에서 세로축 아래쪽에 물결선(〰)을 사용한 가장 알맞은 이유는 무엇인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "날짜별 서울의 낮 최고 기온",
+          yUnit: "°C",
+          xUnit: "일",
+          yMin: 20,
+          yMax: 30,
+          yMajorStep: 5,
+          yMinorStep: 1,
+          useWavyLine: true,
+          xLabels: ["1", "2", "3", "4", "5"],
+          values: [23, 25, 24, 28, 27],
+          pointColor: "#e11d48",
+          lineColor: "#f43f5e"
+        }),
+        options: [
+          "기온이 영하로 내려갔기 때문입니다.",
+          "필요 없는 0 °C부터 20 °C까지의 눈금을 줄여서 변화 모습을 뚜렷하게 나타내기 위해서입니다.",
+          "가로축의 날짜 간격을 넓히기 위해서입니다.",
+          "그래프의 제목을 더 크게 쓰기 위해서입니다."
+        ],
+        answer: "필요 없는 0 °C부터 20 °C까지의 눈금을 줄여서 변화 모습을 뚜렷하게 나타내기 위해서입니다.",
+        explanation: "자료의 값이 모두 20 °C 이상이므로 0부터 20까지의 빈 공간을 물결선으로 줄이면, 기온이 변하는 모습을 훨씬 크고 뚜렷하게 나타낼 수 있습니다."
+      },
+      {
+        id: 9,
+        difficulty: "중",
+        type: "short",
+        unit: "°C",
+        question: "위의 8번 그래프(날짜별 서울의 낮 최고 기온)에서 기온이 가장 높았던 날과 가장 낮았던 날의 기온 차는 몇 °C인가요? (숫자만 쓰세요)",
+        visualHTML: createLineGraphSVG({
+          title: "날짜별 서울의 낮 최고 기온",
+          yUnit: "°C",
+          xUnit: "일",
+          yMin: 20,
+          yMax: 30,
+          yMajorStep: 5,
+          yMinorStep: 1,
+          useWavyLine: true,
+          xLabels: ["1", "2", "3", "4", "5"],
+          values: [23, 25, 24, 28, 27],
+          pointColor: "#e11d48",
+          lineColor: "#f43f5e"
+        }),
+        answer: "5",
+        explanation: "기온이 가장 높았던 날은 4일로 28 °C이고, 가장 낮았던 날은 1일로 23 °C입니다. 따라서 기온 차는 28 - 23 = 5 (°C)입니다."
+      },
+      {
+        id: 10,
+        difficulty: "중",
+        type: "choice",
+        question: "하늘이의 키를 매년 3월에 재어 나타낸 꺾은선그래프입니다. 전년에 비해 키가 가장 많이 자란 때는 몇 학년과 몇 학년 사이인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "학년별 하늘이의 키 변화",
+          yUnit: "cm",
+          xUnit: "학년",
+          yMin: 110,
+          yMax: 150,
+          yMajorStep: 10,
+          yMinorStep: 2,
+          useWavyLine: true,
+          xLabels: ["1", "2", "3", "4"],
+          values: [118, 124, 134, 140],
+          pointColor: "#0284c7",
+          lineColor: "#38bdf8"
+        }),
+        options: [
+          "1학년과 2학년 사이",
+          "2학년과 3학년 사이",
+          "3학년과 4학년 사이",
+          "모두 똑같이 자랐다"
+        ],
+        answer: "2학년과 3학년 사이",
+        explanation: "꺾은선그래프에서 선분이 가장 가파르게 위로 올라간 구간을 찾으면 됩니다. 1→2학년은 6 cm, 2→3학년은 10 cm(124→134), 3→4학년은 6 cm 자랐으므로 2학년과 3학년 사이에 가장 많이 자랐습니다."
+      },
+      {
+        id: 11,
+        difficulty: "중",
+        type: "choice",
+        question: "어느 문구점에서 5일 동안 팔린 공책 수를 나타낸 꺾은선그래프입니다. 그래프를 보고 바르게 해석한 것은 어느 것인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "날짜별 팔린 공책 수",
+          yUnit: "권",
+          xUnit: "일",
+          yMin: 0,
+          yMax: 100,
+          yMajorStep: 20,
+          yMinorStep: 5,
+          xLabels: ["10", "11", "12", "13", "14"],
+          values: [45, 60, 60, 85, 50],
+          pointColor: "#0d9488",
+          lineColor: "#14b8a6"
+        }),
+        options: [
+          "세로 눈금 한 칸은 4권을 나타냅니다.",
+          "11일과 12일에 팔린 공책 수는 같습니다.",
+          "공책은 날마다 계속해서 더 많이 팔렸습니다.",
+          "14일에 팔린 공책은 60권입니다."
+        ],
+        answer: "11일과 12일에 팔린 공책 수는 같습니다.",
+        explanation: "11일과 12일 사이의 선분이 수평(평평함)을 이루며 둘 다 60권으로 같습니다. 세로 눈금 한 칸은 20 ÷ 4 = 5권입니다."
+      },
+      {
+        id: 12,
+        difficulty: "중",
+        type: "short",
+        unit: "L",
+        question: "물통에 담긴 물의 양을 2분마다 재어 나타낸 꺾은선그래프입니다. 4분일 때와 8분일 때 물의 양의 합은 몇 L인가요? (숫자만 쓰세요)",
+        visualHTML: createLineGraphSVG({
+          title: "시간에 따른 물통 속 물의 양",
+          yUnit: "L",
+          xUnit: "분",
+          yMin: 0,
+          yMax: 40,
+          yMajorStep: 10,
+          yMinorStep: 2,
+          xLabels: ["2", "4", "6", "8", "10"],
+          values: [8, 16, 22, 30, 36],
+          pointColor: "#2563eb",
+          lineColor: "#3b82f6"
+        }),
+        answer: "46",
+        explanation: "세로 눈금 5칸이 10 L이므로 눈금 한 칸은 2 L입니다. 4분일 때 물의 양은 16 L, 8분일 때 물의 양은 30 L이므로 두 양의 합은 16 + 30 = 46 (L)입니다."
+      },
+      {
+        id: 13,
+        difficulty: "중",
+        type: "choice",
+        question: "어느 지역의 월별 미세먼지 농도를 나타낸 꺾은선그래프입니다. 전달에 비해 미세먼지 농도가 줄어든 달은 모두 몇 번 있나요?",
+        visualHTML: createLineGraphSVG({
+          title: "월별 미세먼지 농도 변화",
+          yUnit: "㎍/㎥",
+          xUnit: "월",
+          yMin: 0,
+          yMax: 80,
+          yMajorStep: 20,
+          yMinorStep: 5,
+          xLabels: ["1", "2", "3", "4", "5", "6"],
+          values: [55, 65, 70, 50, 55, 35],
+          pointColor: "#6366f1",
+          lineColor: "#818cf8"
+        }),
+        options: ["1번", "2번", "3번", "4번"],
+        answer: "2번",
+        explanation: "꺾은선이 오른쪽 아래로 내려간 구간을 찾습니다. 3월→4월(70→50)과 5월→6월(55→35)로 모두 2번 줄어들었습니다."
+      },
+      {
+        id: 14,
+        difficulty: "중",
+        type: "choice",
+        question: "태양이가 줄넘기 연습을 하여 매일 성공한 횟수를 꺾은선그래프로 그렸습니다. 3일째와 4일째 사이에 성공한 횟수는 어떻게 변했나요?",
+        visualHTML: createLineGraphSVG({
+          title: "날짜별 줄넘기 성공 횟수",
+          yUnit: "회",
+          xUnit: "일째",
+          yMin: 30,
+          yMax: 80,
+          yMajorStep: 10,
+          yMinorStep: 2,
+          useWavyLine: true,
+          xLabels: ["1", "2", "3", "4", "5"],
+          values: [36, 44, 52, 68, 74],
+          pointColor: "#d97706",
+          lineColor: "#f59e0b"
+        }),
+        options: [
+          "12회 줄어들었습니다.",
+          "14회 늘어났습니다.",
+          "16회 늘어났습니다.",
+          "18회 늘어났습니다."
+        ],
+        answer: "16회 늘어났습니다.",
+        explanation: "3일째는 52회, 4일째는 68회 성공했습니다. 따라서 68 - 52 = 16(회) 늘어났습니다."
+      },
+
+      // ==================== [난이도: 상] 15번 ~ 20번 ====================
+      {
+        id: 15,
+        difficulty: "상",
+        type: "choice",
+        question: "어느 식물의 키를 2일 간격으로 재어 나타낸 꺾은선그래프입니다. 식물이 자라는 빠르기가 일정하다고 할 때, 9일째 되는 날 식물의 키는 약 몇 cm일까요?",
+        visualHTML: createLineGraphSVG({
+          title: "날짜별 식물의 키 변화",
+          yUnit: "cm",
+          xUnit: "일째",
+          yMin: 0,
+          yMax: 25,
+          yMajorStep: 5,
+          yMinorStep: 1,
+          xLabels: ["2", "4", "6", "8", "10"],
+          values: [4, 7, 10, 13, 16],
+          pointColor: "#059669",
+          lineColor: "#10b981"
+        }),
+        options: ["14 cm", "14.5 cm", "15 cm", "15.5 cm"],
+        answer: "14.5 cm",
+        explanation: "8일째는 13 cm, 10일째는 16 cm로 2일 동안 3 cm씩 일정하게 자라고 있습니다. 9일째는 8일째와 10일째의 한가운데이므로 13 cm와 16 cm의 중간인 14.5 cm입니다."
+      },
+      {
+        id: 16,
+        difficulty: "상",
+        type: "short",
+        unit: "명",
+        question: "어느 수영장의 월별 이용객 수를 나타낸 꺾은선그래프입니다. 5월부터 8월까지 4개월 동안 수영장을 이용한 사람은 모두 몇 명인가요? (숫자만 쓰세요)",
+        visualHTML: createLineGraphSVG({
+          title: "월별 수영장 이용객 수",
+          yUnit: "명",
+          xUnit: "월",
+          yMin: 100,
+          yMax: 400,
+          yMajorStep: 100,
+          yMinorStep: 20,
+          useWavyLine: true,
+          xLabels: ["5", "6", "7", "8"],
+          values: [140, 220, 340, 380],
+          pointColor: "#0284c7",
+          lineColor: "#0ea5e9"
+        }),
+        answer: "1080",
+        explanation: "세로 눈금 5칸이 100명이므로 눈금 한 칸은 20명입니다. 각 달의 이용객 수는 5월 140명, 6월 220명, 7월 340명, 8월 380명입니다. 모두 더하면 140 + 220 + 340 + 380 = 1080(명)입니다."
+      },
+      {
+        id: 17,
+        difficulty: "상",
+        type: "choice",
+        question: "지우네 반 학생들의 1학기 동안 읽은 책 권수의 평균을 월별로 나타낸 꺾은선그래프입니다. 전달에 비해 읽은 책 권수가 늘어난 폭이 가장 큰 달은 몇 월인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "월별 1인당 평균 독서량",
+          yUnit: "권",
+          xUnit: "월",
+          yMin: 0,
+          yMax: 20,
+          yMajorStep: 5,
+          yMinorStep: 1,
+          xLabels: ["3", "4", "5", "6", "7"],
+          values: [4, 7, 13, 12, 17],
+          pointColor: "#9333ea",
+          lineColor: "#a855f7"
+        }),
+        options: ["4월", "5월", "6월", "7월"],
+        answer: "5월",
+        explanation: "각 달의 증가량을 구해 보면: 3월→4월은 3권(4→7), 4월→5월은 6권(7→13), 5월→6월은 1권 감소(13→12), 6월→7월은 5권(12→17)입니다. 따라서 늘어난 폭이 가장 큰 달은 5월입니다."
+      },
+      {
+        id: 18,
+        difficulty: "상",
+        type: "choice",
+        question: "어떤 자료를 꺾은선그래프로 그리려고 합니다. 자료의 가장 작은 값이 152이고, 가장 큰 값이 188일 때, 세로축의 물결선 위 첫 번째 눈금의 값과 눈금 한 칸의 크기로 가장 알맞은 것은 어느 것인가요?",
+        visualHTML: "",
+        options: [
+          "물결선 위 첫 눈금: 100, 눈금 한 칸: 20",
+          "물결선 위 첫 눈금: 150, 눈금 한 칸: 2",
+          "물결선 위 첫 눈금: 160, 눈금 한 칸: 5",
+          "물결선 위 첫 눈금: 150, 눈금 한 칸: 10"
+        ],
+        answer: "물결선 위 첫 눈금: 150, 눈금 한 칸: 2",
+        explanation: "가장 작은 값(152)보다 조금 작은 150을 물결선 위 첫 눈금으로 정하면 150부터 190까지 40의 범위를 표현하면 됩니다. 눈금 한 칸을 2로 하면 20칸 안에 모든 자료를 정확하고 자세하게 나타낼 수 있습니다. (160부터 시작하면 152를 그릴 수 없습니다.)"
+      },
+      {
+        id: 19,
+        difficulty: "상",
+        type: "choice",
+        question: "유진이가 주말 동안 공원을 산책하며 10분마다 걸음 수를 기록한 꺾은선그래프입니다. 그래프를 보고 추론한 내용으로 가장 알맞은 것은 무엇인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "시간에 따른 누적 걸음 수",
+          yUnit: "걸음",
+          xUnit: "분",
+          yMin: 0,
+          yMax: 4000,
+          yMajorStep: 1000,
+          yMinorStep: 200,
+          xLabels: ["10", "20", "30", "40", "50"],
+          values: [800, 1800, 1800, 2800, 3600],
+          pointColor: "#e11d48",
+          lineColor: "#f43f5e"
+        }),
+        options: [
+          "유진이는 50분 동안 한 번도 쉬지 않고 계속 걸었습니다.",
+          "20분부터 30분 사이에는 벤치에 앉아 쉬었을 것입니다.",
+          "10분부터 20분 사이보다 40분부터 50분 사이에 더 빠르게 걸었습니다.",
+          "50분 동안 걸은 총 걸음 수는 3800걸음입니다."
+        ],
+        answer: "20분부터 30분 사이에는 벤치에 앉아 쉬었을 것입니다.",
+        explanation: "20분일 때 1800걸음, 30분일 때도 1800걸음으로 누적 걸음 수에 변화가 없습니다. 따라서 20분~30분 사이에는 걷지 않고 쉬었다고 추론할 수 있습니다."
+      },
+      {
+        id: 20,
+        difficulty: "상",
+        type: "choice",
+        question: "어느 제과점의 일주일 중 5일간 식빵 판매량을 나타낸 꺾은선그래프입니다. 5일 동안 팔린 식빵의 하루 평균 판매량은 몇 개인가요?",
+        visualHTML: createLineGraphSVG({
+          title: "요일별 식빵 판매량",
+          yUnit: "개",
+          xUnit: "요일",
+          yMin: 20,
+          yMax: 70,
+          yMajorStep: 10,
+          yMinorStep: 2,
+          useWavyLine: true,
+          xLabels: ["월", "화", "수", "목", "금"],
+          values: [32, 38, 44, 40, 46],
+          pointColor: "#b45309",
+          lineColor: "#d97706"
+        }),
+        options: ["38개", "40개", "42개", "44개"],
+        answer: "40개",
+        explanation: "세로 눈금 5칸이 10개이므로 눈금 한 칸은 2개입니다. 월(32) + 화(38) + 수(44) + 목(40) + 금(46) = 200개입니다. 5일 동안의 평균은 200 ÷ 5 = 40(개)입니다."
+      }
+    ];
+
+    /**
+     * 3. 애플리케이션 상태(State) 관리
+     */
+    const appState = {
+      student: {
+        classNum: "",
+        studentNum: "",
+        name: ""
+      },
+      userAnswers: {},        // 1차 풀이 답안 { [qId]: string }
+      firstResults: {},       // 1차 채점 결과 { [qId]: boolean }
+      retryAnswers: {},       // 2차 재도전 입력/선택 임시 답안 { [qId]: string }
+      retryStatus: {},        // 2차 재도전 상태 { [qId]: 'pending' | 'solved_2nd' | 'failed_2nd' }
+      isSubmitted: false,
+      filterMode: "all"       // 'all' | 'wrong'
+    };
+
+    // DOM 요소 참조
+    const screenStart = document.getElementById("screen-start");
+    const screenQuiz = document.getElementById("screen-quiz");
+    const screenResult = document.getElementById("screen-result");
+
+    const startForm = document.getElementById("start-form");
+    const inputClass = document.getElementById("input-class");
+    const inputNumber = document.getElementById("input-number");
+    const inputName = document.getElementById("input-name");
+    const startErrorMsg = document.getElementById("start-error-msg");
+
+    const headerStudentInfo = document.getElementById("header-student-info");
+    const displayStudentLabel = document.getElementById("display-student-label");
+    const headerProgressBadge = document.getElementById("header-progress-badge");
+    const solvedCountEl = document.getElementById("solved-count");
+
+    const questionNavGrid = document.getElementById("question-nav-grid");
+    const questionsContainer = document.getElementById("questions-container");
+    const btnSubmitQuiz = document.getElementById("btn-submit-quiz");
+
+    const resultStudentTitle = document.getElementById("result-student-title");
+    const resultScoreEl = document.getElementById("result-score");
+    const resultCorrectCountEl = document.getElementById("result-correct-count");
+    const resultWrongCountEl = document.getElementById("result-wrong-count");
+    const scorecardGrid = document.getElementById("scorecard-grid");
+    const resultQuestionsContainer = document.getElementById("result-questions-container");
+    const filterAllBtn = document.getElementById("filter-all-btn");
+    const filterWrongBtn = document.getElementById("filter-wrong-btn");
+    const filterWrongNum = document.getElementById("filter-wrong-num");
+    const btnRestartAll = document.getElementById("btn-restart-all");
+
+    /**
+     * 토스트 메시지 표시 함수 (alert() 대체)
+     */
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      const colors = {
+        info: "bg-slate-800 text-white border-slate-700",
+        success: "bg-emerald-600 text-white border-emerald-500",
+        warning: "bg-amber-500 text-white border-amber-400",
+        error: "bg-rose-600 text-white border-rose-500"
+      };
+      toast.className = `${colors[type] || colors.info} px-5 py-3 rounded-2xl shadow-xl border font-bold text-sm text-center animate-pop pointer-events-auto`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.3s ease";
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    /**
+     * 난이도 뱃지 HTML 생성
+     */
+    function getDifficultyBadgeHTML(diff) {
+      if (diff === "하") {
+        return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-700 border border-emerald-200">난이도 · 하</span>`;
+      } else if (diff === "중") {
+        return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-100 text-amber-700 border border-amber-200">난이도 · 중</span>`;
+      } else {
+        return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-rose-100 text-rose-700 border border-rose-200">난이도 · 상</span>`;
+      }
+    }
+
+    /**
+     * 문항 유형 뱃지 HTML 생성
+     */
+    function getTypeBadgeHTML(type) {
+      if (type === "choice") {
+        return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-100 text-sky-700">선다형</span>`;
+      }
+      return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">단답형</span>`;
+    }
+
+    /**
+     * 답안 비교 정규화 (숫자/문자열 공백 제거 및 소수점 비교 지원)
+     */
+    function checkAnswerMatch(userVal, correctVal) {
+      if (userVal === undefined || userVal === null) return false;
+      const u = String(userVal).trim();
+      const c = String(correctVal).trim();
+      if (u === "") return false;
+      if (u === c) return true;
+      // 숫자 비교 (예: "14.0" vs "14", "1,080" vs "1080")
+      const uNum = Number(u.replace(/,/g, ""));
+      const cNum = Number(c.replace(/,/g, ""));
+      if (!Number.isNaN(uNum) && !Number.isNaN(cNum) && uNum === cNum) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * 4. 시작 화면 이벤트 핸들러
+     */
+    startForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const classVal = inputClass.value.trim();
+      const numVal = inputNumber.value.trim();
+      const nameVal = inputName.value.trim();
+
+      if (!classVal || !numVal || !nameVal) {
+        startErrorMsg.textContent = "⚠️ 반, 번호, 이름을 모두 입력해야 학습을 시작할 수 있어요!";
+        startErrorMsg.classList.remove("hidden");
+        return;
+      }
+
+      startErrorMsg.classList.add("hidden");
+      appState.student = {
+        classNum: classVal,
+        studentNum: numVal,
+        name: nameVal
+      };
+
+      // 헤더 학생 정보 업데이트
+      displayStudentLabel.textContent = `4학년 ${classVal}반 ${numVal}번 ${nameVal}`;
+      headerStudentInfo.classList.remove("hidden");
+      headerStudentInfo.classList.add("flex");
+
+      // 화면 전환
+      screenStart.classList.add("hidden");
+      screenQuiz.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      renderQuizScreen();
+      showToast(`${nameVal} 학생, 반가워요! 20문제를 차근차근 풀어 보세요.`, "success");
+    });
+
+    /**
+     * 5. 문제 풀이 화면 렌더링
+     */
+    function renderQuizScreen() {
+      // 상단 1~20번 네비게이터 렌더링
+      questionNavGrid.innerHTML = QUIZ_DATA.map((q) => {
+        const isAnswered = appState.userAnswers[q.id] !== undefined && String(appState.userAnswers[q.id]).trim() !== "";
+        return `
+          <button type="button" data-scroll-to="q-card-${q.id}"
+            class="nav-pill h-8 rounded-lg text-xs font-bold border transition cursor-pointer
+            ${isAnswered
+              ? 'bg-sky-500 text-white border-sky-600 shadow-sm'
+              : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-sky-50'}">
+            ${q.id}
+          </button>
+        `;
+      }).join("");
+
+      // 네비게이터 클릭 시 부드럽게 해당 문항으로 스크롤
+      questionNavGrid.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.getAttribute("data-scroll-to");
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            const yOffset = -90;
+            const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        });
+      });
+
+      // 20문제 카드 렌더링
+      questionsContainer.innerHTML = QUIZ_DATA.map((q) => {
+        const savedAns = appState.userAnswers[q.id] || "";
+        let inputAreaHTML = "";
+
+        if (q.type === "choice") {
+          const circleNums = ["①", "②", "③", "④"];
+          inputAreaHTML = `
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+              ${q.options.map((opt, idx) => {
+                const isSelected = savedAns === opt;
+                return `
+                  <button type="button" data-qid="${q.id}" data-option="${opt.replace(/"/g, '&quot;')}"
+                    class="quiz-option-btn option-btn text-left p-4 rounded-2xl border-2 flex items-start gap-3 cursor-pointer
+                    ${isSelected
+                      ? 'bg-sky-50 border-sky-500 text-sky-900 shadow-md ring-2 ring-sky-200'
+                      : 'bg-white border-slate-200 hover:border-sky-300 hover:bg-slate-50 text-slate-700'}">
+                    <span class="font-bold text-lg leading-none mt-0.5 ${isSelected ? 'text-sky-600' : 'text-slate-400'}">${circleNums[idx]}</span>
+                    <span class="font-medium text-base leading-snug">${opt}</span>
+                  </button>
+                `;
+              }).join("")}
+            </div>
+          `;
+        } else {
+          inputAreaHTML = `
+            <div class="mt-4 bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center gap-3">
+              <label for="short-input-${q.id}" class="font-bold text-slate-700 text-base">정답 입력:</label>
+              <div class="flex items-center gap-2">
+                <input type="text" inputmode="decimal" id="short-input-${q.id}" data-qid="${q.id}" value="${savedAns}"
+                  placeholder="숫자 입력"
+                  class="quiz-short-input w-36 px-4 py-2.5 rounded-xl border-2 border-slate-300 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 outline-none font-bold text-lg text-center bg-white transition" />
+                ${q.unit ? `<span class="font-bold text-slate-600 text-base">${q.unit}</span>` : ""}
+              </div>
+              <span class="text-xs text-slate-400 ml-auto">* 단위 없이 숫자만 적어 주세요.</span>
+            </div>
+          `;
+        }
+
+        return `
+          <article id="q-card-${q.id}" class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-slate-100 transition">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span class="font-jua text-xl sm:text-2xl text-sky-600">문제 ${q.id}.</span>
+                ${getDifficultyBadgeHTML(q.difficulty)}
+                ${getTypeBadgeHTML(q.type)}
+              </div>
+              <span class="text-xs font-bold text-slate-400">배점 5점</span>
+            </div>
+
+            <p class="text-slate-800 font-bold text-base sm:text-lg leading-relaxed mb-4">
+              ${q.question}
+            </p>
+
+            ${q.visualHTML ? `<div class="my-5 overflow-x-auto">${q.visualHTML}</div>` : ""}
+
+            ${inputAreaHTML}
+          </article>
+        `;
+      }).join("");
+
+      // 이벤트 바인딩: 선다형 클릭
+      document.querySelectorAll(".quiz-option-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qid = Number(btn.getAttribute("data-qid"));
+          const optionVal = btn.getAttribute("data-option");
+          appState.userAnswers[qid] = optionVal;
+          updateProgressUI();
+
+          // 해당 카드의 버튼 스타일만 즉시 갱신 (스크롤 유지)
+          const card = document.getElementById(`q-card-${qid}`);
+          card.querySelectorAll(".quiz-option-btn").forEach(b => {
+            const isSel = b.getAttribute("data-option") === optionVal;
+            const numSpan = b.querySelector("span:first-child");
+            if (isSel) {
+              b.className = "quiz-option-btn option-btn text-left p-4 rounded-2xl border-2 flex items-start gap-3 cursor-pointer bg-sky-50 border-sky-500 text-sky-900 shadow-md ring-2 ring-sky-200";
+              numSpan.className = "font-bold text-lg leading-none mt-0.5 text-sky-600";
+            } else {
+              b.className = "quiz-option-btn option-btn text-left p-4 rounded-2xl border-2 flex items-start gap-3 cursor-pointer bg-white border-slate-200 hover:border-sky-300 hover:bg-slate-50 text-slate-700";
+              numSpan.className = "font-bold text-lg leading-none mt-0.5 text-slate-400";
+            }
+          });
+        });
+      });
+
+      // 이벤트 바인딩: 단답형 입력
+      document.querySelectorAll(".quiz-short-input").forEach(inp => {
+        inp.addEventListener("input", () => {
+          const qid = Number(inp.getAttribute("data-qid"));
+          appState.userAnswers[qid] = inp.value;
+          updateProgressUI();
+        });
+      });
+
+      updateProgressUI();
+    }
+
+    /**
+     * 풀이 진행률 및 상단 네비게이터 갱신
+     */
+    function updateProgressUI() {
+      let count = 0;
+      QUIZ_DATA.forEach(q => {
+        const val = appState.userAnswers[q.id];
+        if (val !== undefined && String(val).trim() !== "") {
+          count++;
+        }
+      });
+      solvedCountEl.textContent = count;
+
+      // 상단 1~20번 버튼 색상 업데이트
+      const pills = questionNavGrid.querySelectorAll("button");
+      QUIZ_DATA.forEach((q, idx) => {
+        const isAnswered = appState.userAnswers[q.id] !== undefined && String(appState.userAnswers[q.id]).trim() !== "";
+        if (pills[idx]) {
+          pills[idx].className = `nav-pill h-8 rounded-lg text-xs font-bold border transition cursor-pointer ${
+            isAnswered
+              ? 'bg-sky-500 text-white border-sky-600 shadow-sm'
+              : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-sky-50'
+          }`;
+        }
+      });
+    }
+
+    /**
+     * 6. 제출 및 1차 자동 채점 처리
+     */
+    btnSubmitQuiz.addEventListener("click", () => {
+      // 풀지 않은 문제가 있는지 확인
+      const unanswered = QUIZ_DATA.filter(q => {
+        const val = appState.userAnswers[q.id];
+        return val === undefined || String(val).trim() === "";
+      });
+
+      if (unanswered.length > 0) {
+        const firstUnanswered = unanswered[0];
+        showToast(`아직 풀지 않은 문제가 ${unanswered.length}개 있어요! (${firstUnanswered.id}번 문제로 이동합니다)`, "warning");
+        const targetEl = document.getElementById(`q-card-${firstUnanswered.id}`);
+        if (targetEl) {
+          const y = targetEl.getBoundingClientRect().top + window.pageYOffset - 90;
+          window.scrollTo({ top: y, behavior: "smooth" });
+          targetEl.classList.add("ring-4", "ring-amber-300");
+          setTimeout(() => targetEl.classList.remove("ring-4", "ring-amber-300"), 2000);
+        }
+        return;
+      }
+
+      // 20문항 채점 실행
+      let correctCount = 0;
+      QUIZ_DATA.forEach(q => {
+        const isCorrect = checkAnswerMatch(appState.userAnswers[q.id], q.answer);
+        appState.firstResults[q.id] = isCorrect;
+        if (isCorrect) {
+          correctCount++;
+          appState.retryStatus[q.id] = "correct_1st";
+        } else {
+          appState.retryStatus[q.id] = "pending"; // 2차 재도전 대기 상태
+          appState.retryAnswers[q.id] = "";
+        }
+      });
+
+      appState.isSubmitted = true;
+      const score = correctCount * 5;
+      const wrongCount = 20 - correctCount;
+
+      // 결과 화면 헤더/요약 업데이트
+      resultStudentTitle.textContent = `4학년 ${appState.student.classNum}반 ${appState.student.studentNum}번 ${appState.student.name} 학생의 성적표`;
+      resultScoreEl.textContent = score;
+      resultCorrectCountEl.textContent = correctCount;
+      resultWrongCountEl.textContent = wrongCount;
+      filterWrongNum.textContent = wrongCount;
+
+      // 헤더 진행률 배지를 점수로 변경
+      headerProgressBadge.innerHTML = `1차 점수: <span class="text-blue-600 font-extrabold">${score}점</span> (${correctCount}/20)`;
+
+      // 만점일 경우 재도전 안내 배너 축하 메시지로 변경
+      const retryGuideBanner = document.getElementById("retry-guide-banner");
+      if (wrongCount === 0) {
+        retryGuideBanner.className = "bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-5 flex items-start gap-3";
+        retryGuideBanner.innerHTML = `
+          <span class="text-3xl">🎉</span>
+          <div>
+            <h4 class="font-bold text-emerald-900 text-lg mb-1">와! 100점 만점입니다! 정말 훌륭해요!</h4>
+            <p class="text-sm text-emerald-800">20문제를 모두 한 번에 맞혔습니다. 아래에서 각 문제의 해설도 확인해 보세요.</p>
+          </div>
+        `;
+      }
+
+      // 화면 전환
+      screenQuiz.classList.add("hidden");
+      screenResult.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      renderScorecardGrid();
+      renderResultQuestions();
+      showToast(`채점이 완료되었습니다! 점수는 ${score}점입니다.`, "success");
+    });
+
+    /**
+     * 7. 결과 화면: 정오표 그리드 렌더링
+     */
+    function renderScorecardGrid() {
+      scorecardGrid.innerHTML = QUIZ_DATA.map(q => {
+        const status = appState.retryStatus[q.id];
+        let badgeStyle = "";
+        let symbol = "";
+
+        if (status === "correct_1st") {
+          badgeStyle = "bg-emerald-50 border-emerald-300 text-emerald-700";
+          symbol = "O";
+        } else if (status === "solved_2nd") {
+          badgeStyle = "bg-amber-50 border-amber-300 text-amber-700";
+          symbol = "△(O)";
+        } else if (status === "failed_2nd") {
+          badgeStyle = "bg-rose-100 border-rose-400 text-rose-700";
+          symbol = "X";
+        } else {
+          // pending (1차 오답, 재도전 전)
+          badgeStyle = "bg-rose-50 border-rose-300 text-rose-600 animate-pulse";
+          symbol = "X (재도전)";
+        }
+
+        return `
+          <button type="button" data-jump-result="res-card-${q.id}"
+            class="p-2 rounded-xl border-2 ${badgeStyle} flex flex-col items-center justify-center transition hover:scale-105 cursor-pointer">
+            <span class="text-xs font-bold text-slate-500">${q.id}번</span>
+            <span class="font-jua text-base mt-0.5">${symbol}</span>
+          </button>
+        `;
+      }).join("");
+
+      scorecardGrid.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          // 만약 '틀린 문제만 보기' 필터 중인데 1차 정답 문항을 눌렀다면 전체 보기로 자동 전환
+          const targetId = btn.getAttribute("data-jump-result");
+          let targetEl = document.getElementById(targetId);
+          if (!targetEl && appState.filterMode === "wrong") {
+            setFilterMode("all");
+            targetEl = document.getElementById(targetId);
+          }
+          if (targetEl) {
+            const y = targetEl.getBoundingClientRect().top + window.pageYOffset - 90;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        });
+      });
+    }
+
+    /**
+     * 필터 버튼 제어 (전체 보기 / 틀린 문제만 보기)
+     */
+    function setFilterMode(mode) {
+      appState.filterMode = mode;
+      if (mode === "all") {
+        filterAllBtn.className = "px-4 py-2 rounded-xl text-sm font-bold bg-sky-600 text-white shadow-sm cursor-pointer";
+        filterWrongBtn.className = "px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer";
+      } else {
+        filterAllBtn.className = "px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer";
+        filterWrongBtn.className = "px-4 py-2 rounded-xl text-sm font-bold bg-rose-600 text-white shadow-sm cursor-pointer";
+      }
+      renderResultQuestions();
+    }
+
+    filterAllBtn.addEventListener("click", () => setFilterMode("all"));
+    filterWrongBtn.addEventListener("click", () => setFilterMode("wrong"));
+
+    /**
+     * 8. 결과 화면: 문항별 상세 카드 & 틀린 문제 2차 재도전 UI 렌더링
+     */
+    function renderResultQuestions() {
+      const targetQuestions = appState.filterMode === "wrong"
+        ? QUIZ_DATA.filter(q => appState.firstResults[q.id] === false)
+        : QUIZ_DATA;
+
+      if (targetQuestions.length === 0) {
+        resultQuestionsContainer.innerHTML = `
+          <div class="bg-white rounded-3xl p-10 text-center border-2 border-emerald-200 shadow-sm">
+            <div class="text-4xl mb-3">🌟</div>
+            <h3 class="font-jua text-2xl text-slate-800 mb-1">틀린 문제가 하나도 없어요!</h3>
+            <p class="text-slate-500 text-sm">'전체 문제 보기'를 눌러 모든 문제의 해설을 확인해 보세요.</p>
+          </div>
+        `;
+        return;
+      }
+
+      resultQuestionsContainer.innerHTML = targetQuestions.map(q => renderSingleResultCard(q)).join("");
+      attachResultCardEvents();
+    }
+
+    /**
+     * 개별 결과 카드 HTML 생성 (상태별 분기: 1차 정답 / 2차 대기 / 2차 성공 / 2차 오답)
+     */
+    function renderSingleResultCard(q) {
+      const status = appState.retryStatus[q.id];
+      const firstAns = appState.userAnswers[q.id];
+      const circleNums = ["①", "②", "③", "④"];
+
+      let cardBorder = "border-slate-200";
+      let statusBannerHTML = "";
+      let bodyInteractionHTML = "";
+      let explanationHTML = "";
+
+      // (A) 1차 시도에서 바로 맞힌 경우
+      if (status === "correct_1st") {
+        cardBorder = "border-emerald-300";
+        statusBannerHTML = `
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800">
+            ⭕ 1차 정답 (+5점)
+          </span>
+        `;
+        bodyInteractionHTML = `
+          <div class="mt-4 bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 text-sm">
+            <span class="font-bold text-emerald-800">내가 쓴 답:</span>
+            <span class="font-extrabold text-emerald-900 ml-1">${firstAns}${q.type === 'short' && q.unit ? q.unit : ''}</span>
+          </div>
+        `;
+        explanationHTML = `
+          <div class="mt-4 bg-sky-50 border border-sky-200 rounded-2xl p-4 text-sm text-slate-700 leading-relaxed">
+            <div class="font-bold text-sky-800 mb-1">💡 풀이 해설</div>
+            <p>${q.explanation}</p>
+          </div>
+        `;
+      }
+
+      // (B) 1차 오답 -> 2차 재도전 대기 중 (정답과 해설을 숨기고 다시 풀기 활성화!)
+      else if (status === "pending") {
+        cardBorder = "border-rose-300 ring-2 ring-rose-100";
+        statusBannerHTML = `
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-extrabold bg-rose-100 text-rose-700">
+            ❌ 1차 오답 · 다시 풀어 보세요!
+          </span>
+        `;
+
+        const currentRetryVal = appState.retryAnswers[q.id] || "";
+        let retryInputUI = "";
+
+        if (q.type === "choice") {
+          retryInputUI = `
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">
+              ${q.options.map((opt, idx) => {
+                const isFirstWrongChoice = opt === firstAns;
+                const isSelectedRetry = opt === currentRetryVal;
+                return `
+                  <button type="button" data-retry-qid="${q.id}" data-retry-opt="${opt.replace(/"/g, '&quot;')}"
+                    ${isFirstWrongChoice ? 'disabled' : ''}
+                    class="retry-option-btn text-left p-3.5 rounded-xl border-2 flex items-start gap-2.5 transition
+                    ${isFirstWrongChoice
+                      ? 'bg-rose-50/60 border-rose-200 text-rose-400 line-through cursor-not-allowed opacity-70'
+                      : isSelectedRetry
+                        ? 'bg-amber-50 border-amber-500 text-amber-900 font-bold shadow-sm cursor-pointer'
+                        : 'bg-white border-slate-200 hover:border-amber-400 text-slate-700 cursor-pointer'}">
+                    <span class="font-bold">${circleNums[idx]}</span>
+                    <span class="text-sm leading-snug">${opt} ${isFirstWrongChoice ? '(1차 선택 오답)' : ''}</span>
+                  </button>
+                `;
+              }).join("")}
+            </div>
+          `;
+        } else {
+          retryInputUI = `
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <input type="text" inputmode="decimal" id="retry-short-input-${q.id}" data-retry-qid="${q.id}"
+                value="${currentRetryVal}" placeholder="새로운 숫자 입력"
+                class="retry-short-input w-40 px-4 py-2.5 rounded-xl border-2 border-amber-300 focus:border-amber-500 focus:ring-4 focus:ring-amber-100 outline-none font-bold text-base text-center bg-white" />
+              ${q.unit ? `<span class="font-bold text-slate-700">${q.unit}</span>` : ""}
+            </div>
+          `;
+        }
+
+        bodyInteractionHTML = `
+          <div class="mt-4 bg-amber-50/90 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
+              <span class="text-rose-700 font-bold">1차에 입력한 답: <span class="underline">${firstAns}${q.type === 'short' && q.unit ? q.unit : ''}</span> (오답)</span>
+              <span class="text-amber-800 font-bold">✨ 2차 도전 기회! 그래프의 눈금을 다시 확인해 보세요.</span>
+            </div>
+
+            ${retryInputUI}
+
+            <div class="pt-2 flex justify-end">
+              <button type="button" data-check-retry="${q.id}"
+                class="btn-check-retry px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-jua text-lg rounded-xl shadow-md transition transform active:scale-95 cursor-pointer">
+                다시 확인하기 🔍
+              </button>
+            </div>
+          </div>
+        `;
+        // pending 상태에서는 해설을 숨김!
+        explanationHTML = "";
+      }
+
+      // (C) 2차 재도전에서 맞힌 경우
+      else if (status === "solved_2nd") {
+        const secondAns = appState.retryAnswers[q.id];
+        cardBorder = "border-amber-400";
+        statusBannerHTML = `
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800">
+            🎉 2차 재도전 정답!
+          </span>
+        `;
+        bodyInteractionHTML = `
+          <div class="mt-4 bg-amber-50 border border-amber-300 rounded-2xl p-4 space-y-1.5 text-sm">
+            <div class="font-extrabold text-amber-900 text-base">👏 정답입니다! 2차 시도에서 스스로 해결했어요!</div>
+            <div class="text-slate-600">
+              1차 답안: <span class="line-through text-rose-500">${firstAns}</span> →
+              2차 정답: <span class="font-bold text-emerald-700">${secondAns}${q.type === 'short' && q.unit ? q.unit : ''}</span>
+            </div>
+          </div>
+        `;
+        explanationHTML = `
+          <div class="mt-4 bg-sky-50 border border-sky-200 rounded-2xl p-4 text-sm text-slate-700 leading-relaxed">
+            <div class="font-bold text-sky-800 mb-1">💡 풀이 해설</div>
+            <p>${q.explanation}</p>
+          </div>
+        `;
+      }
+
+      // (D) 2차 재도전에서도 틀린 경우 -> 비로소 정답과 상세 해설 공개!
+      else if (status === "failed_2nd") {
+        const secondAns = appState.retryAnswers[q.id];
+        cardBorder = "border-rose-400";
+        statusBannerHTML = `
+          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800">
+            ❌ 2차 오답 · 해설 확인
+          </span>
+        `;
+        bodyInteractionHTML = `
+          <div class="mt-4 bg-rose-50 border border-rose-200 rounded-2xl p-4 space-y-2 text-sm">
+            <div class="font-bold text-rose-800">아쉬워요! 2차 시도에서도 정답이 아니었어요. 아래 정답과 해설을 꼭 읽어 보세요.</div>
+            <div class="flex flex-wrap gap-4 text-slate-700">
+              <span>1차 입력: <strong class="text-rose-600">${firstAns}</strong></span>
+              <span>2차 입력: <strong class="text-rose-600">${secondAns}</strong></span>
+              <span class="bg-emerald-100 text-emerald-900 px-2.5 py-0.5 rounded-lg font-extrabold">
+                실제 정답: ${q.answer}${q.type === 'short' && q.unit ? q.unit : ''}
+              </span>
+            </div>
+          </div>
+        `;
+        explanationHTML = `
+          <div class="mt-4 bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-4 sm:p-5 text-sm text-slate-800 leading-relaxed">
+            <div class="font-bold text-indigo-900 text-base mb-1.5">📘 친절한 풀이 해설</div>
+            <p>${q.explanation}</p>
+          </div>
+        `;
+      }
+
+      return `
+        <article id="res-card-${q.id}" class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 ${cardBorder} transition">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <span class="font-jua text-xl sm:text-2xl text-slate-800">문제 ${q.id}.</span>
+              ${getDifficultyBadgeHTML(q.difficulty)}
+              ${getTypeBadgeHTML(q.type)}
+            </div>
+            <div>${statusBannerHTML}</div>
+          </div>
+
+          <p class="text-slate-800 font-bold text-base sm:text-lg leading-relaxed mb-4">
+            ${q.question}
+          </p>
+
+          ${q.visualHTML ? `<div class="my-4 overflow-x-auto">${q.visualHTML}</div>` : ""}
+
+          ${bodyInteractionHTML}
+          ${explanationHTML}
+        </article>
+      `;
+    }
+
+    /**
+     * 결과 화면 내 재도전 버튼 및 입력 이벤트 바인딩
+     */
+    function attachResultCardEvents() {
+      // 2차 선다형 보기 클릭
+      document.querySelectorAll(".retry-option-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qid = Number(btn.getAttribute("data-retry-qid"));
+          const optVal = btn.getAttribute("data-retry-opt");
+          appState.retryAnswers[qid] = optVal;
+
+          // 해당 카드의 보기 버튼만 즉시 갱신
+          const card = document.getElementById(`res-card-${qid}`);
+          const firstAns = appState.userAnswers[qid];
+          card.querySelectorAll(".retry-option-btn").forEach(b => {
+            const bOpt = b.getAttribute("data-retry-opt");
+            if (bOpt === firstAns) return;
+            if (bOpt === optVal) {
+              b.className = "retry-option-btn text-left p-3.5 rounded-xl border-2 flex items-start gap-2.5 transition bg-amber-50 border-amber-500 text-amber-900 font-bold shadow-sm cursor-pointer";
+            } else {
+              b.className = "retry-option-btn text-left p-3.5 rounded-xl border-2 flex items-start gap-2.5 transition bg-white border-slate-200 hover:border-amber-400 text-slate-700 cursor-pointer";
+            }
+          });
+        });
+      });
+
+      // 2차 단답형 입력
+      document.querySelectorAll(".retry-short-input").forEach(inp => {
+        inp.addEventListener("input", () => {
+          const qid = Number(inp.getAttribute("data-retry-qid"));
+          appState.retryAnswers[qid] = inp.value;
+        });
+      });
+
+      // [다시 확인하기] 버튼 클릭
+      document.querySelectorAll(".btn-check-retry").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qid = Number(btn.getAttribute("data-check-retry"));
+          const questionObj = QUIZ_DATA.find(item => item.id === qid);
+          const retryVal = appState.retryAnswers[qid];
+
+          if (retryVal === undefined || String(retryVal).trim() === "") {
+            showToast(`${qid}번 문제의 새로운 답을 먼저 선택하거나 입력해 주세요!`, "warning");
+            return;
+          }
+
+          if (checkAnswerMatch(retryVal, questionObj.answer)) {
+            appState.retryStatus[qid] = "solved_2nd";
+            showToast(`🎉 ${qid}번 문제 정답입니다! 2차 시도에서 해결했어요!`, "success");
+          } else {
+            appState.retryStatus[qid] = "failed_2nd";
+            showToast(`${qid}번 문제 2차 오답입니다. 아래에 공개된 정답과 해설을 확인해 보세요.`, "error");
+          }
+
+          // 정오표 및 해당 카드 UI 즉시 업데이트
+          renderScorecardGrid();
+          const oldCard = document.getElementById(`res-card-${qid}`);
+          if (oldCard) {
+            oldCard.outerHTML = renderSingleResultCard(questionObj);
+            attachResultCardEvents();
+          }
+        });
+      });
+    }
+
+    /**
+     * 9. 처음부터 다시 풀기 (초기화)
+     */
+    btnRestartAll.addEventListener("click", () => {
+      appState.userAnswers = {};
+      appState.firstResults = {};
+      appState.retryAnswers = {};
+      appState.retryStatus = {};
+      appState.isSubmitted = false;
+      appState.filterMode = "all";
+
+      headerProgressBadge.innerHTML = `진행률: <span id="solved-count">0</span> / 20`;
+      // solvedCountEl 재바인딩
+      const newSolvedEl = document.getElementById("solved-count");
+      if (newSolvedEl) newSolvedEl.textContent = "0";
+
+      screenResult.classList.add("hidden");
+      screenQuiz.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      renderQuizScreen();
+      // updateProgressUI가 새 DOM을 참조하도록 갱신
+      document.getElementById("solved-count").textContent = "0";
+      showToast("모든 답안이 초기화되었습니다. 처음부터 다시 풀어 보세요!", "info");
+    });
+  </script>
+</body>
+</html>
